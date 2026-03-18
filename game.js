@@ -3,7 +3,7 @@ const SAVE_VERSION = 3;
 const BASE_PER_CLICK = 1n;
 const SCORE_STEP = 10n;
 const AUTO_TICKS_PER_SEC = 20n;
-const TOTAL_LEVELS = 260;
+const TOTAL_LEVELS = 360;
 const LEVEL_PREVIEW_COUNT = 30;
 const MAX_BULK_STEPS = 4096;
 const SAVE_PEPPER = "coleperrilliat|staticquasar931|single-screen-edition";
@@ -114,14 +114,17 @@ const UPGRADE_CATALOG = Object.freeze([
   Object.freeze({ id: "void_hangar", name: "Void Hangar", cost: 976562500000000000000000n, add: 4882812500000000000000n, scaleNum: 125n, scaleDen: 100n }),
   Object.freeze({ id: "paradox_engine", name: "Paradox Engine", cost: 4882812500000000000000000n, add: 24414062500000000000000n, scaleNum: 125n, scaleDen: 100n }),
   Object.freeze({ id: "null_foundry", name: "Null Foundry", cost: 24414062500000000000000000n, add: 122070312500000000000000n, scaleNum: 125n, scaleDen: 100n }),
-  Object.freeze({ id: "evernight_core", name: "Evernight Core", cost: 122070312500000000000000000n, add: 610351562500000000000000n, scaleNum: 125n, scaleDen: 100n })
+  Object.freeze({ id: "evernight_core", name: "Evernight Core", cost: 122070312500000000000000000n, add: 610351562500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "starless_tower", name: "Starless Tower", cost: 610351562500000000000000000n, add: 3051757812500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "apex_signal", name: "Apex Signal", cost: 3051757812500000000000000000n, add: 15258789062500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "zero_syndicate", name: "Zero Syndicate", cost: 15258789062500000000000000000n, add: 76293945312500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "night_parliament", name: "Night Parliament", cost: 76293945312500000000000000000n, add: 381469726562500000000000000n, scaleNum: 125n, scaleDen: 100n })
 ]);
 
 const scoreEl = document.getElementById("score");
 const perClickEl = document.getElementById("perClick");
 const perSecEl = document.getElementById("perSec");
 const upgradeCountEl = document.getElementById("upgradeCount");
-const currentCloakLabelEl = document.getElementById("currentCloakLabel");
 const pageTitleEl = document.getElementById("pageTitle");
 const safeModeBadgeEl = document.getElementById("safeModeBadge");
 const subjectHeadingEl = document.getElementById("subjectHeading");
@@ -521,23 +524,21 @@ function preloadCloakAssets() {
 
 function renderCloakSection() {
   const effectiveCloak = getEffectiveCloak();
-  const headingTitle = "Epstein Clicker Enhanced by StaticQuasar931";
+  const headingTitle = "Epstein Clicker - Play";
 
   pageTitleEl.textContent = headingTitle;
   document.title = headingTitle;
-  safeModeBadgeEl.textContent = `Safe Mode: ${state.safeMode ? "On" : "Off"}`;
-  currentCloakLabelEl.textContent = effectiveCloak.name;
-  subjectHeadingEl.textContent = effectiveCloak.name.toUpperCase();
+  safeModeBadgeEl.textContent = `SAFE MODE: ${state.safeMode ? "ON" : "OFF"}`;
+  subjectHeadingEl.textContent = "EPSTEIN CLICKER";
   portraitImageEl.src = effectiveCloak.image;
   portraitImageEl.alt = `${effectiveCloak.name} portrait`;
-  clickBtnEl.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,0.08), 0 28px 70px ${effectiveCloak.accent}33`;
   cloakSelectEl.value = state.selectedCloak;
   safeModeToggleEl.checked = state.safeMode;
 }
 
 function renderTopStats() {
   scoreEl.textContent = formatScore10(state.score10);
-  perClickEl.textContent = commaBigInt(state.perClick);
+  perClickEl.textContent = formatNamedBigInt(state.perClick);
   perSecEl.textContent = formatPerSec(state.perClick);
   upgradeCountEl.textContent = commaBigInt(state.upgradesOwned);
 }
@@ -757,7 +758,7 @@ function buyAllAffordable() {
     return;
   }
 
-  updateBulkSummary(`Buy All bought ${commaBigInt(purchasedTotal)} upgrades.`);
+  updateBulkSummary(`BUY ALL BOUGHT ${commaBigInt(purchasedTotal)} UPGRADES.`);
   renderAll();
   saveGame();
 }
@@ -808,7 +809,7 @@ function handleTrustedClick(point) {
   }
 
   state.score10 += state.perClick * SCORE_STEP;
-  createFloatText(`+${commaBigInt(state.perClick)}`, point.x, point.y);
+  createFloatText(`+${formatNamedBigInt(state.perClick)}`, point.x, point.y);
   runClickAnimation();
   renderTopStats();
   renderProgress();
