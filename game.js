@@ -7,6 +7,20 @@ const TOTAL_LEVELS = 260;
 const LEVEL_PREVIEW_COUNT = 30;
 const MAX_BULK_STEPS = 4096;
 const SAVE_PEPPER = "coleperrilliat|staticquasar931|single-screen-edition";
+const NUMBER_NAMES = [
+  { value: 1000000000000000000000000000000000000n, name: "undecillion" },
+  { value: 1000000000000000000000000000000000n, name: "decillion" },
+  { value: 1000000000000000000000000000000n, name: "nonillion" },
+  { value: 1000000000000000000000000000n, name: "octillion" },
+  { value: 1000000000000000000000000n, name: "septillion" },
+  { value: 1000000000000000000000n, name: "sextillion" },
+  { value: 1000000000000000000n, name: "quintillion" },
+  { value: 1000000000000000n, name: "quadrillion" },
+  { value: 1000000000000n, name: "trillion" },
+  { value: 1000000000n, name: "billion" },
+  { value: 1000000n, name: "million" },
+  { value: 1000n, name: "thousand" }
+];
 
 const CLOAKS = Object.freeze([
   Object.freeze({
@@ -68,36 +82,39 @@ const CLOAKS = Object.freeze([
 ]);
 
 const UPGRADE_CATALOG = Object.freeze([
-  Object.freeze({ id: "paper_trail", name: "Paper Trail", cost: 15n, add: 1n, scaleNum: 118n, scaleDen: 100n }),
-  Object.freeze({ id: "camera_crew", name: "Camera Crew", cost: 60n, add: 2n, scaleNum: 118n, scaleDen: 100n }),
-  Object.freeze({ id: "speed_tape", name: "Speed Tape", cost: 180n, add: 4n, scaleNum: 118n, scaleDen: 100n }),
-  Object.freeze({ id: "night_shift", name: "Night Shift", cost: 450n, add: 7n, scaleNum: 118n, scaleDen: 100n }),
-  Object.freeze({ id: "rumor_mill", name: "Rumor Mill", cost: 1200n, add: 12n, scaleNum: 118n, scaleDen: 100n }),
-  Object.freeze({ id: "studio_booth", name: "Studio Booth", cost: 3500n, add: 20n, scaleNum: 119n, scaleDen: 100n }),
-  Object.freeze({ id: "server_closet", name: "Server Closet", cost: 9000n, add: 35n, scaleNum: 119n, scaleDen: 100n }),
-  Object.freeze({ id: "microphone_wall", name: "Microphone Wall", cost: 25000n, add: 60n, scaleNum: 119n, scaleDen: 100n }),
-  Object.freeze({ id: "private_archive", name: "Private Archive", cost: 65000n, add: 100n, scaleNum: 119n, scaleDen: 100n }),
-  Object.freeze({ id: "neon_van", name: "Neon Van", cost: 175000n, add: 170n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "deal_desk", name: "Deal Desk", cost: 450000n, add: 280n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "clip_farm", name: "Viral Clip Farm", cost: 1200000n, add: 460n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "data_locker", name: "Data Locker", cost: 3200000n, add: 760n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "event_floor", name: "Event Floor", cost: 8500000n, add: 1250n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "broadcast_hub", name: "Broadcast Hub", cost: 23000000n, add: 2100n, scaleNum: 120n, scaleDen: 100n }),
-  Object.freeze({ id: "investor_deck", name: "Investor Deck", cost: 62000000n, add: 3500n, scaleNum: 121n, scaleDen: 100n }),
-  Object.freeze({ id: "satellite_uplink", name: "Satellite Uplink", cost: 170000000n, add: 5800n, scaleNum: 121n, scaleDen: 100n }),
-  Object.freeze({ id: "research_wing", name: "Research Wing", cost: 470000000n, add: 9600n, scaleNum: 121n, scaleDen: 100n }),
-  Object.freeze({ id: "midnight_warehouse", name: "Midnight Warehouse", cost: 1300000000n, add: 16000n, scaleNum: 121n, scaleDen: 100n }),
-  Object.freeze({ id: "signal_tower", name: "Signal Tower", cost: 3600000000n, add: 26000n, scaleNum: 121n, scaleDen: 100n }),
-  Object.freeze({ id: "launch_office", name: "Launch Office", cost: 10000000000n, add: 43000n, scaleNum: 122n, scaleDen: 100n }),
-  Object.freeze({ id: "district_network", name: "District Network", cost: 28000000000n, add: 71000n, scaleNum: 122n, scaleDen: 100n }),
-  Object.freeze({ id: "brand_engine", name: "Brand Engine", cost: 78000000000n, add: 117000n, scaleNum: 122n, scaleDen: 100n }),
-  Object.freeze({ id: "logistics_grid", name: "Logistics Grid", cost: 220000000000n, add: 193000n, scaleNum: 122n, scaleDen: 100n }),
-  Object.freeze({ id: "cloud_array", name: "Cloud Array", cost: 620000000000n, add: 318000n, scaleNum: 122n, scaleDen: 100n }),
-  Object.freeze({ id: "quantum_copier", name: "Quantum Copier", cost: 1750000000000n, add: 524000n, scaleNum: 123n, scaleDen: 100n }),
-  Object.freeze({ id: "mirror_factory", name: "Mirror Factory", cost: 5000000000000n, add: 863000n, scaleNum: 123n, scaleDen: 100n }),
-  Object.freeze({ id: "orbit_studio", name: "Orbit Studio", cost: 14000000000000n, add: 1423000n, scaleNum: 123n, scaleDen: 100n }),
-  Object.freeze({ id: "timeline_forge", name: "Timeline Forge", cost: 40000000000000n, add: 2347000n, scaleNum: 123n, scaleDen: 100n }),
-  Object.freeze({ id: "infinite_stage", name: "Infinite Stage", cost: 115000000000000n, add: 3870000n, scaleNum: 124n, scaleDen: 100n })
+  Object.freeze({ id: "cursor", name: "Cursor", cost: 1000n, add: 10n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "diddy", name: "Diddy Factory", cost: 8000n, add: 25n, scaleNum: 130n, scaleDen: 100n }),
+  Object.freeze({ id: "mega", name: "Mega Factory", cost: 15000n, add: 50n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "oil", name: "Baby Oil Factory", cost: 40000n, add: 150n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "degree", name: "Epstein Degree", cost: 80000n, add: 400n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "nyc", name: "NYC Apartment", cost: 500000n, add: 2000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "mex", name: "Mexico House", cost: 3000000n, add: 15000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "island", name: "Epstein Island", cost: 15000000n, add: 80000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "jet", name: "Gulfstream Jet", cost: 80000000n, add: 400000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "runway", name: "Private Island Runway", cost: 500000000n, add: 2500000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "shell", name: "Shell Company Empire", cost: 3000000000n, add: 15000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "offshore", name: "Offshore Money Network", cost: 20000000000n, add: 100000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "media", name: "Media Control Machine", cost: 150000000000n, add: 750000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "lobby", name: "Global Lobbying Force", cost: 1000000000000n, add: 5000000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "access", name: "Shadow Access Pass", cost: 8000000000000n, add: 40000000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "grid", name: "World Influence Grid", cost: 60000000000000n, add: 300000000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "protocol", name: "Reality Protocol", cost: 500000000000000n, add: 2500000000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "final", name: "The Untouchable", cost: 4000000000000000n, add: 20000000000000n, scaleNum: 135n, scaleDen: 100n }),
+  Object.freeze({ id: "cabal", name: "The Cabal Engine", cost: 20000000000000000n, add: 100000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "sing", name: "Singularity Core", cost: 100000000000000000n, add: 500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "vault", name: "Black Vault Network", cost: 500000000000000000n, add: 2500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "oracle", name: "Oracle Array", cost: 2500000000000000000n, add: 12500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "zeit", name: "Zeit Control", cost: 12500000000000000000n, add: 62500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "rift", name: "Rift Generator", cost: 62500000000000000000n, add: 312500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "dynasty", name: "Dynasty Protocol", cost: 312500000000000000000n, add: 1562500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "omega", name: "Omega Directive", cost: 1562500000000000000000n, add: 7812500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "eclipse", name: "Eclipse Authority", cost: 7812500000000000000000n, add: 39062500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "godmode", name: "Godmode Override", cost: 39062500000000000000000n, add: 195312500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "infinite_stage", name: "Infinite Stage", cost: 195312500000000000000000n, add: 976562500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "void_hangar", name: "Void Hangar", cost: 976562500000000000000000n, add: 4882812500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "paradox_engine", name: "Paradox Engine", cost: 4882812500000000000000000n, add: 24414062500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "null_foundry", name: "Null Foundry", cost: 24414062500000000000000000n, add: 122070312500000000000000n, scaleNum: 125n, scaleDen: 100n }),
+  Object.freeze({ id: "evernight_core", name: "Evernight Core", cost: 122070312500000000000000000n, add: 610351562500000000000000n, scaleNum: 125n, scaleDen: 100n })
 ]);
 
 const scoreEl = document.getElementById("score");
@@ -167,15 +184,36 @@ function commaBigInt(value) {
   return sign + text.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function formatNamedBigInt(value) {
+  for (const entry of NUMBER_NAMES) {
+    if (value >= entry.value) {
+      const whole = value / entry.value;
+      const remainder = value % entry.value;
+      const decimal = whole < 100n ? Number((remainder * 10n) / entry.value) : 0;
+      return decimal > 0 ? `${whole.toString()}.${decimal} ${entry.name}` : `${whole.toString()} ${entry.name}`;
+    }
+  }
+
+  return commaBigInt(value);
+}
+
 function formatScore10(score10) {
   const whole = score10 / SCORE_STEP;
   const tenth = score10 % SCORE_STEP;
+  if (whole >= 1000000n) {
+    const named = formatNamedBigInt(whole);
+    return tenth > 0n ? `${named} ${tenth.toString()}/10` : named;
+  }
   return `${commaBigInt(whole)}.${tenth.toString()}`;
 }
 
 function formatPerSec(perClick) {
   const whole = perClick / SCORE_STEP;
   const tenth = perClick % SCORE_STEP;
+  if (whole >= 1000000n) {
+    const named = formatNamedBigInt(whole);
+    return tenth > 0n ? `${named} ${tenth.toString()}/10` : named;
+  }
   return `${commaBigInt(whole)}.${tenth.toString()}`;
 }
 
@@ -417,21 +455,7 @@ function getEffectiveCloak() {
 }
 
 function formatCompactBigInt(value) {
-  const units = [
-    { div: 1000000000000000n, suffix: "Q" },
-    { div: 1000000000000n, suffix: "T" },
-    { div: 1000000000n, suffix: "B" },
-    { div: 1000000n, suffix: "M" },
-    { div: 1000n, suffix: "K" }
-  ];
-
-  for (const unit of units) {
-    if (value >= unit.div) {
-      return `${commaBigInt(value / unit.div)}${unit.suffix}`;
-    }
-  }
-
-  return commaBigInt(value);
+  return formatNamedBigInt(value);
 }
 
 function calculateLevelRequirement(level) {
@@ -485,6 +509,13 @@ function populateCloakOptions() {
     option.value = cloak.id;
     option.textContent = cloak.name;
     cloakSelectEl.appendChild(option);
+  }
+}
+
+function preloadCloakAssets() {
+  for (const cloak of CLOAKS) {
+    const image = new Image();
+    image.src = cloak.image;
   }
 }
 
@@ -630,9 +661,9 @@ function refreshShop() {
     const plan = simulateMaxPurchasePlan(upgrade, state.score10);
     nodes.details.innerHTML =
       `Owned: x${commaBigInt(upgrade.owned)}<br>` +
-      `+${commaBigInt(upgrade.add)} per click<br>` +
-      `Cost: $${commaBigInt(upgrade.cost)}`;
-    nodes.buyOne.textContent = `Buy 1 ($${commaBigInt(upgrade.cost)})`;
+      `+${formatNamedBigInt(upgrade.add)} per click<br>` +
+      `Cost: ${formatNamedBigInt(upgrade.cost)}`;
+    nodes.buyOne.textContent = `Buy 1 (${formatNamedBigInt(upgrade.cost)})`;
     nodes.buyMax.textContent = plan.count > 0n ? `Buy Max (${commaBigInt(plan.count)})` : "Buy Max";
     nodes.buyOne.disabled = state.score10 < (upgrade.cost * SCORE_STEP);
     nodes.buyMax.disabled = plan.count === 0n;
@@ -917,6 +948,7 @@ function bindEvents() {
 }
 
 populateCloakOptions();
+preloadCloakAssets();
 loadGame();
 renderAll();
 bindEvents();

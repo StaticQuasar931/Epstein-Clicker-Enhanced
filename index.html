@@ -14,6 +14,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="click.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/Special/mb1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/Special/kju1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/Special/mus1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/advanced/di1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/trum1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/steph1.png">
+  <link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/StaticQuasar931/Wheres-Epstein@main/Assets/Waldos/eps1.png">
   <link rel="stylesheet" href="styles.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GRRLD38PB9"></script>
   <script>
@@ -30,15 +38,10 @@
     <section class="hero-card">
       <h1 id="pageTitle">Epstein Clicker Enhanced by StaticQuasar931</h1>
 
-      <div class="credit-strip">
-        <span>Original game: Cole "coleperrilliat"</span>
-        <span>Enhancements: StaticQuasar931</span>
-        <span id="safeModeBadge">Safe Mode: Off</span>
-      </div>
-
       <div class="link-strip" aria-label="project links">
         <a href="https://discord.gg/zJgmhs5a37" target="_blank" rel="noopener noreferrer">StaticQuasar931 Discord</a>
         <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">StaticQuasar931 Page</a>
+        <span id="safeModeBadge">Safe Mode: Off</span>
       </div>
 
       <div class="stats-grid">
@@ -86,17 +89,19 @@
             <h2>CONTROLS</h2>
           </div>
 
-          <label class="field">
-            <span>CLOAK</span>
-            <select id="cloakSelect"></select>
-          </label>
+          <div class="cloak-bar">
+            <label class="field">
+              <span>CLOAK</span>
+              <select id="cloakSelect"></select>
+            </label>
 
-          <label class="safe-switch" for="safeModeToggle">
-            <span>
-              <strong>Safe Mode</strong>
-            </span>
-            <input id="safeModeToggle" type="checkbox" role="switch" aria-label="Toggle safe mode">
-          </label>
+            <label class="safe-switch" for="safeModeToggle">
+              <span>
+                <strong>SAFE</strong>
+              </span>
+              <input id="safeModeToggle" type="checkbox" role="switch" aria-label="Toggle safe mode">
+            </label>
+          </div>
 
           <div class="action-row">
             <button id="buyAllBtn" class="primary-btn" type="button">Buy All Affordable</button>
