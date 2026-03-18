@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Epstein Clicker by Cole Perrilliat | Enhanced by StaticQuasar931</title>
+  <meta name="description" content="Play the enhanced single-screen edition of Epstein Clicker. Original game by Cole Perrilliat, also known as coleperrilliat. Enhancement pass, UI cleanup, QoL upgrades, safe mode, and polish by StaticQuasar931.">
+  <meta name="keywords" content="Epstein Clicker, Cole Perrilliat, coleperrilliat, StaticQuasar931, browser clicker game, idle clicker, safe mode, enhanced edition">
+  <meta name="author" content="Cole Perrilliat and StaticQuasar931">
+  <meta property="og:title" content="Epstein Clicker Enhanced by StaticQuasar931">
+  <meta property="og:description" content="Original game by Cole Perrilliat. Enhanced single-screen edition with cleaner UI, more progression, cloak options, and a safe mode by StaticQuasar931.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#111827">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GRRLD38PB9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+    gtag("config", "G-GRRLD38PB9");
+  </script>
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero-card">
+      <p class="eyebrow">Original by Cole Perrilliat / coleperrilliat</p>
+      <h1 id="pageTitle">Epstein Clicker Enhanced by StaticQuasar931</h1>
+      <p class="lede">
+        This game was made by Cole and enhanced by StaticQuasar931.
+        StaticQuasar931 did not create the original game and is credited only for the enhancement pass.
+      </p>
+
+      <div class="credit-strip">
+        <span>Original game: Cole "coleperrilliat"</span>
+        <span>Enhancements: StaticQuasar931</span>
+        <span id="safeModeBadge">Safe Mode: Off</span>
+      </div>
+
+      <div class="link-strip" aria-label="project links">
+        <a href="https://discord.gg/zJgmhs5a37" target="_blank" rel="noopener noreferrer">StaticQuasar931 Discord</a>
+        <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">StaticQuasar931 Page</a>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <span class="stat-label">Score</span>
+          <strong id="score">0.0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Per Click</span>
+          <strong id="perClick">1</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Auto / Sec</span>
+          <strong id="perSec">0.1</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Upgrades</span>
+          <strong id="upgradeCount">0</strong>
+        </article>
+        <article class="stat-card">
+          <span class="stat-label">Current Cloak</span>
+          <strong id="currentCloakLabel">MrBeast</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="play-layout">
+      <div class="game-stage card-surface">
+        <div class="subject-header">
+          <div>
+            <p class="section-label">Play Screen</p>
+            <h2 id="subjectHeading">Tap the target</h2>
+            <p id="subjectDescription" class="section-copy">Every tap grows your score and your auto income.</p>
+          </div>
+          <div class="integrity-pill" id="tamperStatus">Client anti-tamper active</div>
+        </div>
+
+        <button id="clickBtn" class="click-button" type="button" aria-label="Click the character to earn score">
+          <span class="portrait-halo"></span>
+          <img id="portraitImage" src="" alt="Current target portrait">
+        </button>
+        <p class="click-hint">Press <kbd>Space</kbd> to click, <kbd>B</kbd> to buy all, and <kbd>S</kbd> to toggle safe mode.</p>
+      </div>
+
+      <aside class="sidebar-stack">
+        <section class="card-surface control-panel">
+          <div class="panel-head">
+            <p class="section-label">Controls</p>
+            <h2>Focused, no extras</h2>
+          </div>
+
+          <label class="field">
+            <span>Character Cloak</span>
+            <select id="cloakSelect"></select>
+          </label>
+
+          <label class="safe-switch" for="safeModeToggle">
+            <span>
+              <strong>Safe Mode</strong>
+              <small>Replaces every Epstein name or image with MrBeast for this session.</small>
+            </span>
+            <input id="safeModeToggle" type="checkbox" role="switch" aria-label="Toggle safe mode">
+          </label>
+
+          <div class="action-row">
+            <button id="buyAllBtn" class="primary-btn" type="button">Buy All Affordable</button>
+            <button id="resetBtn" class="secondary-btn" type="button">Reset Save</button>
+          </div>
+
+          <p class="small-note" id="buyAllSummary">Buy All uses a bounded bulk-purchase routine so it stays responsive.</p>
+        </section>
+
+        <section class="card-surface progress-panel">
+          <div class="panel-head">
+            <p class="section-label">Progress</p>
+            <h2>Levels and milestones</h2>
+          </div>
+
+          <div class="level-summary">
+            <div>
+              <span class="stat-label">Level</span>
+              <strong id="currentLevel">1</strong>
+            </div>
+            <div>
+              <span class="stat-label">Next Level At</span>
+              <strong id="nextLevel">12,000</strong>
+            </div>
+            <div>
+              <span class="stat-label">Progress</span>
+              <strong id="levelProgress">0%</strong>
+            </div>
+          </div>
+
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+
+          <details class="dropdown-card">
+            <summary>Show the next 30 levels</summary>
+            <div id="levelList" class="level-list"></div>
+          </details>
+        </section>
+      </aside>
+    </section>
+
+    <section class="card-surface shop-panel">
+      <div class="panel-head">
+        <p class="section-label">Upgrade Shop</p>
+        <h2>30 upgrades, all on one screen</h2>
+      </div>
+      <div id="shop" class="shop-list"></div>
+    </section>
+
+    <footer class="footer-note">
+      <p>This game was made by Cole "coleperrilliat" and enhanced by StaticQuasar931.</p>
+      <p>StaticQuasar931 did not create the original game.</p>
+      <p><a href="https://discord.gg/zJgmhs5a37" target="_blank" rel="noopener noreferrer">Discord</a> | <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">StaticQuasar931 Page</a></p>
+    </footer>
+  </main>
+
+  <div id="floatingLayer" aria-hidden="true"></div>
+
+  <div id="tamperOverlay" class="overlay" hidden>
+    <div class="overlay-card">
+      <p class="section-label">Anti-Tamper</p>
+      <h2>Save integrity failed</h2>
+      <p id="tamperMessage">The save or runtime state looked modified, so the session was reset to keep the game stable.</p>
+      <button id="tamperAcknowledgeBtn" class="primary-btn" type="button">Start Fresh</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
