@@ -108,8 +108,6 @@ const currentCloakLabelEl = document.getElementById("currentCloakLabel");
 const pageTitleEl = document.getElementById("pageTitle");
 const safeModeBadgeEl = document.getElementById("safeModeBadge");
 const subjectHeadingEl = document.getElementById("subjectHeading");
-const subjectDescriptionEl = document.getElementById("subjectDescription");
-const tamperStatusEl = document.getElementById("tamperStatus");
 const portraitImageEl = document.getElementById("portraitImage");
 const clickBtnEl = document.getElementById("clickBtn");
 const cloakSelectEl = document.getElementById("cloakSelect");
@@ -156,7 +154,7 @@ function createFreshState() {
     selectedCloak: "epstein",
     safeMode: false,
     upgrades: createFreshUpgradeState(),
-    lastBulkSummary: "Buy All uses a bounded bulk-purchase routine so it stays responsive.",
+    lastBulkSummary: "Buy all ready.",
     tampered: false
   };
 }
@@ -327,7 +325,7 @@ function restoreStateFromPayload(payload) {
       selectedCloak: payload.selectedCloak,
       safeMode: payload.safeMode,
       upgrades: restoredUpgrades,
-      lastBulkSummary: "Loaded save successfully.",
+      lastBulkSummary: "Save loaded.",
       tampered: false
     }
   };
@@ -370,7 +368,7 @@ function loadGame() {
 function triggerTamperReset(reason) {
   state = createFreshState();
   state.tampered = true;
-  state.lastBulkSummary = "The session was reset after a tamper check.";
+  state.lastBulkSummary = "Session reset.";
   autoCarry = 0n;
   lastLevelRendered = -1;
   clearSave();
@@ -380,20 +378,9 @@ function triggerTamperReset(reason) {
   if (tamperOverlayEl) {
     tamperOverlayEl.hidden = false;
   }
-  setTamperStatus("Save reset after a tamper check.", true);
   if (scoreEl) {
     renderAll();
   }
-}
-
-function setTamperStatus(message, flagged) {
-  if (!tamperStatusEl) {
-    return;
-  }
-
-  tamperStatusEl.textContent = message;
-  tamperStatusEl.style.color = flagged ? "#fecdd3" : "#bbf7d0";
-  tamperStatusEl.style.borderColor = flagged ? "rgba(251, 113, 133, 0.4)" : "rgba(74, 222, 128, 0.32)";
 }
 
 function auditRuntimeState() {
@@ -503,18 +490,13 @@ function populateCloakOptions() {
 
 function renderCloakSection() {
   const effectiveCloak = getEffectiveCloak();
-  const headingTitle = state.safeMode
-    ? "MrBeast Mode Enhanced by StaticQuasar931"
-    : "Epstein Clicker Enhanced by StaticQuasar931";
+  const headingTitle = "Epstein Clicker Enhanced by StaticQuasar931";
 
   pageTitleEl.textContent = headingTitle;
   document.title = headingTitle;
   safeModeBadgeEl.textContent = `Safe Mode: ${state.safeMode ? "On" : "Off"}`;
   currentCloakLabelEl.textContent = effectiveCloak.name;
-  subjectHeadingEl.textContent = `Tap ${effectiveCloak.name}`;
-  subjectDescriptionEl.textContent = state.safeMode && (state.selectedCloak === "epstein" || state.selectedCloak === "epstein2")
-    ? "Safe Mode swapped the Epstein portrait and label to MrBeast."
-    : effectiveCloak.description;
+  subjectHeadingEl.textContent = effectiveCloak.name.toUpperCase();
   portraitImageEl.src = effectiveCloak.image;
   portraitImageEl.alt = `${effectiveCloak.name} portrait`;
   clickBtnEl.style.boxShadow = `inset 0 0 0 1px rgba(255,255,255,0.08), 0 28px 70px ${effectiveCloak.accent}33`;
@@ -692,7 +674,7 @@ function buyUpgrade(id) {
   state.upgradesOwned += 1n;
   upgrade.owned += 1n;
   upgrade.cost = nextCostFromCost(upgrade.cost, upgrade);
-  updateBulkSummary(`Bought 1 ${upgrade.name}.`);
+  updateBulkSummary(`${upgrade.name} bought.`);
   renderAll();
   saveGame();
 }
@@ -709,7 +691,7 @@ function buyUpgradeMax(id) {
   }
 
   updateBulkSummary(
-    `Bought ${commaBigInt(plan.count)} ${upgrade.name}${plan.count === 1n ? "" : "s"} in one go${plan.capped ? " until the safety cap" : ""}.`
+    `Bought ${commaBigInt(plan.count)} ${upgrade.name}${plan.count === 1n ? "" : "s"}${plan.capped ? " (capped)" : ""}.`
   );
   renderAll();
   saveGame();
@@ -739,12 +721,12 @@ function buyAllAffordable() {
   }
 
   if (purchasedTotal === 0n) {
-    updateBulkSummary("Nothing affordable yet. Keep clicking or wait for auto income.");
+    updateBulkSummary("Nothing affordable.");
     refreshShop();
     return;
   }
 
-  updateBulkSummary(`Buy All picked up ${commaBigInt(purchasedTotal)} upgrades across ${purchasedTypes} rows.`);
+  updateBulkSummary(`Buy All bought ${commaBigInt(purchasedTotal)} upgrades.`);
   renderAll();
   saveGame();
 }
@@ -876,7 +858,6 @@ function renderAll() {
     refreshShop();
   }
   buyAllSummaryEl.textContent = state.lastBulkSummary;
-  setTamperStatus(state.tampered ? "Save reset after a tamper check." : "Client anti-tamper active", state.tampered);
 }
 
 function initAutoIncome() {

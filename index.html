@@ -13,7 +13,7 @@
   <meta name="theme-color" content="#111827">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GRRLD38PB9"></script>
   <script>
@@ -28,12 +28,7 @@
 <body>
   <main class="app-shell">
     <section class="hero-card">
-      <p class="eyebrow">Original by Cole Perrilliat / coleperrilliat</p>
       <h1 id="pageTitle">Epstein Clicker Enhanced by StaticQuasar931</h1>
-      <p class="lede">
-        This game was made by Cole and enhanced by StaticQuasar931.
-        StaticQuasar931 did not create the original game and is credited only for the enhancement pass.
-      </p>
 
       <div class="credit-strip">
         <span>Original game: Cole "coleperrilliat"</span>
@@ -74,36 +69,31 @@
       <div class="game-stage card-surface">
         <div class="subject-header">
           <div>
-            <p class="section-label">Play Screen</p>
-            <h2 id="subjectHeading">Tap the target</h2>
-            <p id="subjectDescription" class="section-copy">Every tap grows your score and your auto income.</p>
+            <h2 id="subjectHeading">CLICK</h2>
           </div>
-          <div class="integrity-pill" id="tamperStatus">Client anti-tamper active</div>
         </div>
 
         <button id="clickBtn" class="click-button" type="button" aria-label="Click the character to earn score">
           <span class="portrait-halo"></span>
           <img id="portraitImage" src="" alt="Current target portrait">
         </button>
-        <p class="click-hint">Press <kbd>Space</kbd> to click, <kbd>B</kbd> to buy all, and <kbd>S</kbd> to toggle safe mode.</p>
+        <p class="click-hint"><kbd>Space</kbd> Clicks | <kbd>B</kbd> Buy All | <kbd>S</kbd> Safe Mode</p>
       </div>
 
       <aside class="sidebar-stack">
         <section class="card-surface control-panel">
           <div class="panel-head">
-            <p class="section-label">Controls</p>
-            <h2>Focused, no extras</h2>
+            <h2>CONTROLS</h2>
           </div>
 
           <label class="field">
-            <span>Character Cloak</span>
+            <span>CLOAK</span>
             <select id="cloakSelect"></select>
           </label>
 
           <label class="safe-switch" for="safeModeToggle">
             <span>
               <strong>Safe Mode</strong>
-              <small>Replaces every Epstein name or image with MrBeast for this session.</small>
             </span>
             <input id="safeModeToggle" type="checkbox" role="switch" aria-label="Toggle safe mode">
           </label>
@@ -113,13 +103,12 @@
             <button id="resetBtn" class="secondary-btn" type="button">Reset Save</button>
           </div>
 
-          <p class="small-note" id="buyAllSummary">Buy All uses a bounded bulk-purchase routine so it stays responsive.</p>
+          <p class="small-note" id="buyAllSummary">Buy all ready.</p>
         </section>
 
         <section class="card-surface progress-panel">
           <div class="panel-head">
-            <p class="section-label">Progress</p>
-            <h2>Levels and milestones</h2>
+            <h2>LEVELS</h2>
           </div>
 
           <div class="level-summary">
@@ -142,7 +131,7 @@
           </div>
 
           <details class="dropdown-card">
-            <summary>Show the next 30 levels</summary>
+            <summary>NEXT 30 LEVELS</summary>
             <div id="levelList" class="level-list"></div>
           </details>
         </section>
@@ -151,15 +140,13 @@
 
     <section class="card-surface shop-panel">
       <div class="panel-head">
-        <p class="section-label">Upgrade Shop</p>
-        <h2>30 upgrades, all on one screen</h2>
+        <h2>UPGRADES</h2>
       </div>
       <div id="shop" class="shop-list"></div>
     </section>
 
     <footer class="footer-note">
-      <p>This game was made by Cole "coleperrilliat" and enhanced by StaticQuasar931.</p>
-      <p>StaticQuasar931 did not create the original game.</p>
+      <p>Made by Cole "coleperrilliat" | Enhanced by StaticQuasar931</p>
       <p><a href="https://discord.gg/zJgmhs5a37" target="_blank" rel="noopener noreferrer">Discord</a> | <a href="https://sites.google.com/view/staticquasar931/gm3z" target="_blank" rel="noopener noreferrer">StaticQuasar931 Page</a></p>
     </footer>
   </main>
