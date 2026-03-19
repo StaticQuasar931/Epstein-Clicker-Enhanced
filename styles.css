@@ -136,6 +136,14 @@ kbd{
   margin-right:48px;
 }
 
+.tickerLink{
+  color:var(--green);
+}
+
+.tickerLink:hover{
+  color:var(--cyan);
+}
+
 @keyframes tickerMove{
   from{ transform:translateX(-50%); }
   to{ transform:translateX(0); }
@@ -215,7 +223,7 @@ body.page{
 
 .mainLayout{
   display:grid;
-  grid-template-columns:minmax(340px, 380px) minmax(440px, 1fr) minmax(340px, 380px);
+  grid-template-columns:minmax(360px, 410px) minmax(420px, 1fr) minmax(360px, 410px);
   gap:20px;
   width:100%;
   align-items:start;
@@ -393,7 +401,7 @@ select{
   width:100%;
   min-height:54px;
   padding:13px 14px;
-  font-size:11px;
+  font-size:12px;
   background:#000;
   color:var(--green);
   border:2px solid var(--green);
@@ -492,17 +500,12 @@ button:disabled{
 
 .shopPanel{
   margin-top:14px;
-  max-height:430px;
-  overflow:hidden;
 }
 
 .shopGrid{
   display:grid;
   grid-template-columns:repeat(4, minmax(0, 1fr));
   gap:10px;
-  max-height:350px;
-  overflow:auto;
-  padding-right:6px;
 }
 
 .shop-row{
@@ -545,20 +548,6 @@ button:disabled{
   padding:10px 8px;
   font-size:11px;
   line-height:1.4;
-}
-
-.shopGrid::-webkit-scrollbar{
-  width:10px;
-}
-
-.shopGrid::-webkit-scrollbar-track{
-  background:#001000;
-  border:1px solid rgba(0,255,90,.35);
-}
-
-.shopGrid::-webkit-scrollbar-thumb{
-  background:linear-gradient(180deg, #00ff5a 0%, #00c87a 100%);
-  border:1px solid #003a18;
 }
 
 .footer{

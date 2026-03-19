@@ -244,6 +244,8 @@ function safeText(value) {
     return value;
   }
   return value
+    .replace(/Ironclad Alibi/gi, "Ironclad Giveaway")
+    .replace(/Last Minute Lawyer/gi, "Last Minute Helper")
     .replace(/Epstein/gi, "MrBeast")
     .replace(/Untouchable/gi, "Friendly")
     .replace(/Baby Oil/gi, "Feastable")
@@ -488,6 +490,7 @@ function effectiveSkinId() {
 function renderSkin() {
   const active = SKINS.find((skin) => skin[0] === effectiveSkinId()) || SKINS[0];
   const gameTitle = state.safeMode ? "MrBeast Clicker - Play" : "Epstein Clicker - Play";
+  const tickerBrand = state.safeMode ? "https://sites.google.com/view/staticquasar931/gm3z" : "epsteinclicker.com";
   document.title = gameTitle;
   if (el.pageTitle) {
     el.pageTitle.textContent = gameTitle;
@@ -515,6 +518,9 @@ function renderSkin() {
   if (el.safeToggle) {
     el.safeToggle.checked = state.safeMode;
   }
+  document.querySelectorAll(".tickerBrand").forEach((node) => {
+    node.textContent = tickerBrand;
+  });
 }
 
 function renderBuyMode() {
@@ -787,10 +793,10 @@ function pulsePortrait() {
   }
   el.clickBtn.animate(
     [
-      { transform: "scale(1)", filter: "brightness(1)" },
-      { transform: "scale(0.93)", filter: "brightness(1.15)" },
-      { transform: "scale(1.04)", filter: "brightness(1.08)" },
-      { transform: "scale(1)", filter: "brightness(1)" }
+      { transform: "scale(1)" },
+      { transform: "scale(0.93)" },
+      { transform: "scale(1.04)" },
+      { transform: "scale(1)" }
     ],
     {
       duration: 120,
