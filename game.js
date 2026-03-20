@@ -783,10 +783,6 @@ function floatText(text, x, y) {
 function noteClick(now) {
   clickTimes.push(now);
   clickTimes = clickTimes.filter((time) => time >= now - 4000);
-  if (clickTimes.length > 140) {
-    triggerTamperReset("Click rate was too high.");
-    return false;
-  }
   return true;
 }
 
