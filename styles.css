@@ -305,6 +305,17 @@ body.page{
   margin-bottom:8px;
 }
 
+.miniStatAccent{
+  color:var(--cyan);
+  text-shadow:0 0 6px rgba(0,255,255,.35);
+}
+
+.miniStatWide span{
+  display:inline-block;
+  max-width:100%;
+  word-break:break-word;
+}
+
 .statSectionTitle{
   font-size:12px;
   color:var(--cyan);
@@ -421,6 +432,17 @@ select option{
   align-items:center;
   gap:10px;
   font-size:10px;
+}
+
+.statusTag{
+  padding:8px 10px;
+  border:1px solid var(--cyan);
+  color:var(--cyan);
+  background:rgba(0, 32, 40, .65);
+  box-shadow:0 0 10px rgba(0,255,255,.18), inset 0 0 8px rgba(0,255,255,.08);
+  font-size:9px;
+  text-align:center;
+  letter-spacing:1px;
 }
 
 input[type="checkbox"]{

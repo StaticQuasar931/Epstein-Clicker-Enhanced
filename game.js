@@ -202,6 +202,7 @@ function freshState() {
     perClick: BASE_PER_CLICK,
     upgradesOwned: 0n,
     lifetimeIncome10: 0n,
+    totalSpent10: 0n,
     selectedSkin: "epstein",
     safeMode: false,
     buyMode: 1n,
@@ -339,6 +340,7 @@ function savePayload() {
     perClick: state.perClick.toString(),
     upgradesOwned: state.upgradesOwned.toString(),
     lifetimeIncome10: state.lifetimeIncome10.toString(),
+    totalSpent10: state.totalSpent10.toString(),
     selectedSkin: state.selectedSkin,
     safeMode: state.safeMode,
     buyMode: state.buyMode.toString(),
@@ -393,12 +395,14 @@ function restore(raw) {
     const perClick = parseBig(payload.perClick);
     const upgradesOwned = parseBig(payload.upgradesOwned);
     const lifetimeIncome10 = parseBig(payload.lifetimeIncome10 ?? payload.score10);
+    const totalSpent10 = parseBig(payload.totalSpent10 ?? "0");
     const buyMode = parseBig(payload.buyMode);
     if (
       score10 === null ||
       perClick === null ||
       upgradesOwned === null ||
       lifetimeIncome10 === null ||
+      totalSpent10 === null ||
       buyMode === null ||
       !BUY_MODES.includes(buyMode)
     ) {
@@ -428,6 +432,7 @@ function restore(raw) {
       perClick,
       upgradesOwned,
       lifetimeIncome10: lifetimeIncome10 >= score10 ? lifetimeIncome10 : score10,
+      totalSpent10,
       selectedSkin: SKINS.some((skin) => skin[0] === payload.selectedSkin) ? payload.selectedSkin : "epstein",
       safeMode: !!payload.safeMode,
       buyMode,
@@ -472,7 +477,41 @@ function auditState() {
     triggerTamperReset("Lifetime income drift detected.");
     return false;
   }
+  if (state.totalSpent10 < 0n) {
+    triggerTamperReset("Spent total drift detected.");
+    return false;
+  }
   return true;
+}
+
+function mountEnhancements() {
+  const clicksRow = el.clicksPerMin?.closest(".miniStat");
+  if (clicksRow && !$("lifetimeIncomeStat")) {
+    clicksRow.insertAdjacentHTML("afterend", '<div class="miniStat miniStatAccent">LIFETIME: <span id="lifetimeIncomeStat">0.0</span></div>');
+  }
+
+  const totalOwnedRow = el.totalUpgrades?.closest(".miniStat");
+  if (totalOwnedRow && !$("totalSpentStat")) {
+    totalOwnedRow.insertAdjacentHTML(
+      "afterend",
+      '<div class="miniStat">SPENT: <span id="totalSpentStat">0.0</span></div><div class="miniStat miniStatWide">TOP: <span id="topUpgradeStat">NONE</span></div>'
+    );
+  }
+
+  const skinWrap = el.skinSelect?.closest(".selectWrap");
+  if (skinWrap && !$("safeModeTag")) {
+    skinWrap.insertAdjacentHTML("afterend", '<div id="safeModeTag" class="statusTag" hidden>SAFE MODE ACTIVE</div>');
+  }
+
+  if (el.summary && !$("lastSavedLabel")) {
+    el.summary.insertAdjacentHTML("afterend", '<p class="footer" id="lastSavedLabel">LAST SAVED: PENDING</p>');
+  }
+
+  el.lifetimeIncome = $("lifetimeIncomeStat");
+  el.totalSpent = $("totalSpentStat");
+  el.topUpgradeStat = $("topUpgradeStat");
+  el.safeModeTag = $("safeModeTag");
+  el.lastSavedLabel = $("lastSavedLabel");
 }
 
 function levelRequirement(level) {
@@ -555,6 +594,9 @@ function renderSkin() {
   if (el.safeToggle) {
     el.safeToggle.checked = state.safeMode;
   }
+  if (el.safeModeTag) {
+    el.safeModeTag.hidden = !state.safeMode;
+  }
   document.querySelectorAll(".tickerBrand").forEach((node) => {
     node.textContent = tickerBrand;
   });
@@ -611,6 +653,26 @@ function renderStats() {
   }
   if (el.clicksPerMin) {
     el.clicksPerMin.textContent = sessionMs > 0 ? (state.rawClicks / (sessionMs / 60000)).toFixed(1) : "0.0";
+  }
+  if (el.lifetimeIncome) {
+    el.lifetimeIncome.textContent = formatScore10(state.lifetimeIncome10);
+  }
+  if (el.totalSpent) {
+    el.totalSpent.textContent = formatScore10(state.totalSpent10);
+  }
+  if (el.topUpgradeStat) {
+    const topUpgrade = [...state.upgrades].reverse().find((upgrade) => upgrade.owned > 0n);
+    el.topUpgradeStat.textContent = topUpgrade ? `${safeText(topUpgrade.name)} #${commas(topUpgrade.owned)}` : "NONE";
+  }
+  if (el.lastSavedLabel) {
+    if (dirty) {
+      el.lastSavedLabel.textContent = "LAST SAVED: SAVING...";
+    } else if (!lastSavedAt) {
+      el.lastSavedLabel.textContent = "LAST SAVED: PENDING";
+    } else {
+      const secondsAgo = Math.max(0, Math.floor((Date.now() - lastSavedAt) / 1000));
+      el.lastSavedLabel.textContent = secondsAgo < 2 ? "LAST SAVED: JUST NOW" : `LAST SAVED: ${secondsAgo}S AGO`;
+    }
   }
 }
 
@@ -701,6 +763,7 @@ function applyPlan(upgrade, plan) {
     return false;
   }
   state.score10 -= plan.spent10;
+  state.totalSpent10 += plan.spent10;
   upgrade.owned += plan.count;
   upgrade.cost = plan.nextCost;
   state.perClick += upgrade.add * plan.count;
@@ -1087,6 +1150,7 @@ function attachEvents() {
 }
 
 function bootGame() {
+  mountEnhancements();
   setupSkinSelect();
   const saved = localStorage.getItem(SAVE_KEY);
   if (saved && !restore(saved)) {
